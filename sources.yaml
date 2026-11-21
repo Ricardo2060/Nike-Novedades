@@ -1,0 +1,49 @@
+# ─────────────────────────────────────────────────────────────
+#  Fuentes oficiales de Nike — ordenadas por prioridad (1 = máxima)
+#  Tipos: page (web sin RSS), youtube (canal por @handle), rss (feed ya existente)
+#  Una fuente con `enabled: false` o con una URL "PEGA_..." se ignora.
+# ─────────────────────────────────────────────────────────────
+max_items_per_source: 10     # tope por fuente y por ejecución
+keep_days: 180               # cuánto tiempo recordar lo ya enviado
+wall_items: 150              # tarjetas máximas en la página
+
+sources:
+  # ── 1. Webs oficiales ──────────────────────────────────────
+  - name: Nike News (about.nike.com)
+    type: page
+    priority: 1
+    url: https://about.nike.com/en/newsroom
+    link_pattern: "/newsroom/releases/"
+
+  - name: Nike.com · Stories
+    type: page
+    priority: 1
+    url: https://www.nike.com/stories
+    link_pattern: "/stories/"      # EXPERIMENTAL: nike.com suele bloquear scrapers
+
+  # ── 2. YouTube oficial (se resuelve el canal por su @handle) ─
+  - {name: "YouTube · Nike",            type: youtube, priority: 2, handle: nike}
+  - {name: "YouTube · Nike Football",   type: youtube, priority: 2, handle: nikefootball}
+  - {name: "YouTube · Nike Basketball", type: youtube, priority: 2, handle: nikebasketball}
+  - {name: "YouTube · Nike Women",      type: youtube, priority: 2, handle: nikewomen}
+  - {name: "YouTube · Nike Running",    type: youtube, priority: 2, handle: nikerunning}
+
+  # ── 3. Instagram oficial ───────────────────────────────────
+  # Instagram no ofrece RSS. Crea un feed por cuenta en un servicio como RSS.app
+  # y pega aquí la URL del feed; pon enabled: true.
+  - {name: "Instagram · @nike",           type: rss, platform: Instagram, priority: 3, enabled: false, url: PEGA_URL_RSS_AQUI}
+  - {name: "Instagram · @nikebasketball", type: rss, platform: Instagram, priority: 3, enabled: false, url: PEGA_URL_RSS_AQUI}
+  - {name: "Instagram · @nikewomen",      type: rss, platform: Instagram, priority: 3, enabled: false, url: PEGA_URL_RSS_AQUI}
+  - {name: "Instagram · @nikesportswear", type: rss, platform: Instagram, priority: 3, enabled: false, url: PEGA_URL_RSS_AQUI}
+  - {name: "Instagram · @niketraining",   type: rss, platform: Instagram, priority: 3, enabled: false, url: PEGA_URL_RSS_AQUI}
+  - {name: "Instagram · @nikefootball",   type: rss, platform: Instagram, priority: 3, enabled: false, url: PEGA_URL_RSS_AQUI}
+
+# Categorías: gana la primera que coincida (por palabras clave en título/resumen).
+categories:
+  - {name: Negocio,         keywords: [earnings, revenue, quarter, investor, fiscal, ceo, results, shareholder, resultados, ingresos]}
+  - {name: Atletas,         keywords: [signs, signing, athlete, champion, medal, record, wins, nil roster, atleta, campeón, oro]}
+  - {name: Colaboraciones,  keywords: [collab, collaboration, " x ", partnership, partner, colaboración, alianza]}
+  - {name: Tecnología,      keywords: [technology, innovation, air zoom, flyknit, vaporfly, dri-fit, tech, engineered, tecnolog, innovaci]}
+  - {name: Activaciones,    keywords: [event, pop-up, activation, house of, tour, experience, evento, experiencia]}
+  - {name: Lanzamientos,    keywords: [launch, drop, release, available, debut, introduc, unveil, reveal, lanzamiento, disponible]}
+  - {name: Producto,        keywords: [collection, shoe, sneaker, kit, jersey, footwear, apparel, colección, zapatilla]}
