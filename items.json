@@ -15,6 +15,18 @@
   "source": "Nike News (about.nike.com)",
   "platform": "Web",
   "priority": 1,
+  "image": "https://nmp.about.nike.com/about/prod/1aa14c3a-3972-41fb-8356-39f5c0167a13/nike-inc-world-of-athletes-nike-training.jpg?m=eyJlZGl0cyI6eyJqcGVnIjp7InF1YWxpdHkiOjEwMH0sIndlYnAiOnsicXVhbGl0eSI6MTAwfSwiZXh0cmFjdCI6eyJsZWZ0IjowLCJ0b3AiOjAsIndpZHRoIjozMjAwLCJoZWlnaHQiOjIxMzN9LCJyZXNpemUiOnsid2lkdGgiOjM4NDB9fX0%3D&s=8a69385f04e38f270b3ea2c29db0ded8699b094bbf126c7baa0f44b889d862c2",
+  "date": "2026-11-21",
+  "title": "Nike Training Introduces Prime, Train, Recover: A Connected System Built Around Athlete Progress",
+  "link": "https://about.nike.com/en/newsroom/releases/nike-training-introduces-prime-train-recover-a-connected-system-built-around-athlete-progress",
+  "summary": "",
+  "published": "",
+  "category": "Atletas"
+ },
+ {
+  "source": "Nike News (about.nike.com)",
+  "platform": "Web",
+  "priority": 1,
   "image": "https://nmp.about.nike.com/about/prod/ffbb6b94-0ab1-42dc-8a63-9d1c66047af9/nike-inc-world-of-athletes.jpg?m=eyJlZGl0cyI6eyJqcGVnIjp7InF1YWxpdHkiOjEwMH0sIndlYnAiOnsicXVhbGl0eSI6MTAwfSwiZXh0cmFjdCI6eyJsZWZ0IjowLCJ0b3AiOjAsIndpZHRoIjozMjAwLCJoZWlnaHQiOjIxMzN9LCJyZXNpemUiOnsid2lkdGgiOjM4NDB9fX0%3D&s=07fd42f4fc2f022c0a310e125a8c3da13d962b00bf1cc66650f38578ec758921",
   "date": "2026-11-21",
   "title": "NIKE, Inc. Unveils the Next Generation of Innovation Across Performance Sports and Sportswear",
@@ -36,18 +48,6 @@
   "category": "Atletas"
  },
  {
-  "source": "Nike News (about.nike.com)",
-  "platform": "Web",
-  "priority": 1,
-  "image": "https://nmp.about.nike.com/about/prod/1aa14c3a-3972-41fb-8356-39f5c0167a13/nike-inc-world-of-athletes-nike-training.jpg?m=eyJlZGl0cyI6eyJqcGVnIjp7InF1YWxpdHkiOjEwMH0sIndlYnAiOnsicXVhbGl0eSI6MTAwfSwiZXh0cmFjdCI6eyJsZWZ0IjowLCJ0b3AiOjAsIndpZHRoIjozMjAwLCJoZWlnaHQiOjIxMzN9LCJyZXNpemUiOnsid2lkdGgiOjM4NDB9fX0%3D&s=8a69385f04e38f270b3ea2c29db0ded8699b094bbf126c7baa0f44b889d862c2",
-  "date": "2026-11-21",
-  "title": "Nike Training Introduces Prime, Train, Recover: A Connected System Built Around Athlete Progress",
-  "link": "https://about.nike.com/en/newsroom/releases/nike-training-introduces-prime-train-recover-a-connected-system-built-around-athlete-progress",
-  "summary": "",
-  "published": "",
-  "category": "Atletas"
- },
- {
   "source": "YouTube · Nike Basketball",
   "platform": "YouTube",
   "priority": 2,
@@ -63,18 +63,6 @@
   "source": "YouTube · Nike",
   "platform": "YouTube",
   "priority": 2,
-  "image": "https://i1.ytimg.com/vi/PgH8lNf_604/hqdefault.jpg",
-  "date": "2026-11-17",
-  "title": "Kids of Immigrants Tiempo x Streetgato",
-  "link": "https://www.youtube.com/shorts/PgH8lNf_604",
-  "summary": "Behind every athlete is a Family, Village and Community. The Nike x Kids of Immigrants Tiempo Maestro and Streetgato.\n\nAvailable now on @kidsofimmigrants and globally November 19th.",
-  "published": "",
-  "category": "Atletas"
- },
- {
-  "source": "YouTube · Nike",
-  "platform": "YouTube",
-  "priority": 2,
   "image": "https://i2.ytimg.com/vi/1VgAtq5nmR8/hqdefault.jpg",
   "date": "2026-11-17",
   "title": "Kids of Immigrants Tiempo x Streetgato",
@@ -82,18 +70,6 @@
   "summary": "Behind every athlete is a Family, Village and Community. The Nike x Kids of Immigrants Tiempo Maestro and Streetgato.\n\nAvailable now on @kidsofimmigrants and globally November 19th.",
   "published": "",
   "category": "Atletas"
- },
- {
-  "source": "YouTube · Nike",
-  "platform": "YouTube",
-  "priority": 2,
-  "image": "https://i1.ytimg.com/vi/86CxD8Dr740/hqdefault.jpg",
-  "date": "2026-11-16",
-  "title": "Nike x UEFA",
-  "link": "https://www.youtube.com/shorts/86CxD8Dr740",
-  "summary": "2027/28. History awaits.",
-  "published": "",
-  "category": "Colaboraciones"
  },
  {
   "source": "YouTube · Nike Basketball",
@@ -108,16 +84,16 @@
   "category": "General"
  },
  {
-  "source": "YouTube · Nike Basketball",
+  "source": "YouTube · Nike",
   "platform": "YouTube",
   "priority": 2,
-  "image": "https://i4.ytimg.com/vi/c1dDjDUAV2I/hqdefault.jpg",
-  "date": "2026-11-12",
-  "title": "Lightest. LeBron. Ever.",
-  "link": "https://www.youtube.com/shorts/c1dDjDUAV2I",
-  "summary": "Only thing heavy is the crown.\n\nThe LeBron XXIV ‘Stars’ is available 11.17",
+  "image": "https://i1.ytimg.com/vi/86CxD8Dr740/hqdefault.jpg",
+  "date": "2026-11-16",
+  "title": "Nike x UEFA",
+  "link": "https://www.youtube.com/shorts/86CxD8Dr740",
+  "summary": "2027/28. History awaits.",
   "published": "",
-  "category": "Lanzamientos"
+  "category": "Colaboraciones"
  },
  {
   "source": "YouTube · Nike Basketball",
@@ -219,18 +195,6 @@
   "source": "YouTube · Nike Women",
   "platform": "YouTube",
   "priority": 2,
-  "image": "https://i2.ytimg.com/vi/5Hp1oHf0UBw/hqdefault.jpg",
-  "date": "2026-10-22",
-  "title": "Rise and shine. Ja Morant.",
-  "link": "https://www.youtube.com/shorts/5Hp1oHf0UBw",
-  "summary": "Subscribe to our channel! http://youtube.com/nike\n\nNike strives to bring innovation and inspiration to every athlete* in the world. (* If you have a body, you are an athlete.)\n\nOur mission is what drives us to do everything possible to expand human potential. We do that by creating groundbreaking sp",
-  "published": "",
-  "category": "Atletas"
- },
- {
-  "source": "YouTube · Nike Women",
-  "platform": "YouTube",
-  "priority": 2,
   "image": "https://i3.ytimg.com/vi/6M27kGgxnkg/hqdefault.jpg",
   "date": "2026-10-22",
   "title": "A new chapter begins in Philly with open arms and a simple declaration.",
@@ -238,6 +202,18 @@
   "summary": "",
   "published": "",
   "category": "General"
+ },
+ {
+  "source": "YouTube · Nike Women",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i2.ytimg.com/vi/5Hp1oHf0UBw/hqdefault.jpg",
+  "date": "2026-10-22",
+  "title": "Rise and shine. Ja Morant.",
+  "link": "https://www.youtube.com/shorts/5Hp1oHf0UBw",
+  "summary": "Subscribe to our channel! http://youtube.com/nike\n\nNike strives to bring innovation and inspiration to every athlete* in the world. (* If you have a body, you are an athlete.)\n\nOur mission is what drives us to do everything possible to expand human potential. We do that by creating groundbreaking sp",
+  "published": "",
+  "category": "Atletas"
  },
  {
   "source": "YouTube · Nike Women",
@@ -264,6 +240,30 @@
   "category": "General"
  },
  {
+  "source": "YouTube · Nike Basketball",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/628ogczUw6o/hqdefault.jpg",
+  "date": "2026-09-14",
+  "title": "Caitlin 1 | Behind the Design | Nike",
+  "link": "https://www.youtube.com/watch?v=628ogczUw6o",
+  "summary": "The Caitlin 1 is built for players who need reliable grip, a quick feel underfoot and a secure fit for creating space on indoor courts. Its cushioning, supportive upper and multidirectional outsole work together to help athletes move confidently through cuts, step-backs, takeoffs and landings.\n\nInsp",
+  "published": "",
+  "category": "Atletas"
+ },
+ {
+  "source": "YouTube · Nike Basketball",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/6rLg68TDNQM/hqdefault.jpg",
+  "date": "2026-08-10",
+  "title": "Ja 4 | Behind the Design | Nike",
+  "link": "https://www.youtube.com/watch?v=6rLg68TDNQM",
+  "summary": "Making of a Nightmare\nJa-Frame containment system, Cushlon 3.0 foam and a reengineered multidirectional traction pattern keep Ja locked in through every explosive move.\n\nDon't Sleep on the Ja 4. Available 8.13.\n\nGo behind the design of the Nike Ja 4 basketball shoe and discover how Ja Morant's explo",
+  "published": "",
+  "category": "Tecnología"
+ },
+ {
   "source": "YouTube · Nike",
   "platform": "YouTube",
   "priority": 2,
@@ -274,6 +274,18 @@
   "summary": "150 ballers, 25 teams, 7 cities, 1 epic final. Endless energy.\n\nThe football you knew will never be the same.",
   "published": "",
   "category": "General"
+ },
+ {
+  "source": "YouTube · Nike Basketball",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/vyjhrYmboO8/hqdefault.jpg",
+  "date": "2026-07-31",
+  "title": "Studio Fleece | NSW | Nike",
+  "link": "https://www.youtube.com/watch?v=vyjhrYmboO8",
+  "summary": "It's just a sweatsuit until it's not.\n\nElevate the everyday in Nike Studio Fleece, engineered softness, crafted to perfection.\n\nFeaturing: Alysa Liu, KARINA, Yeat, Sha'carri Richardson, Lauren James, Reece James, Jazzy Davidson, and Moses Itauma.",
+  "published": "",
+  "category": "Tecnología"
  },
  {
   "source": "YouTube · Nike",
@@ -336,6 +348,18 @@
   "category": "Activaciones"
  },
  {
+  "source": "YouTube · Nike Basketball",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i4.ytimg.com/vi/G0sUuHddK_M/hqdefault.jpg",
+  "date": "2026-07-16",
+  "title": "Nike Sabrina 4 | Behind the Design",
+  "link": "https://www.youtube.com/watch?v=G0sUuHddK_M",
+  "summary": "Pull up with Sabrina Ionescu and learn how her latest signature shoe pushes hoopers to play with lightness all game long. Arriving 7.17.\n\nShop Nike https://www.nike.com/basketball",
+  "published": "",
+  "category": "Producto"
+ },
+ {
   "source": "YouTube · Nike",
   "platform": "YouTube",
   "priority": 2,
@@ -356,6 +380,18 @@
   "title": "Welcome to the United State of Irrational Belief. 🎙️Jason Sudeikis",
   "link": "https://www.youtube.com/shorts/6zQLtI62YU0",
   "summary": "",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike Basketball",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/BpjvDmrLimM/hqdefault.jpg",
+  "date": "2026-06-27",
+  "title": "Taurasi Edge | Nike",
+  "link": "https://www.youtube.com/watch?v=BpjvDmrLimM",
+  "summary": "Learn from a legend, then become one.\n\nAaliyah Chavez, Bella Hines, Jazzy Davidson, Jerzy Robinson, Juju Watkins, Madison Booker, and Syla Swords came to the Nike Sport Research Lab to work with Diana Taurasi in the first ever Taurasi Edge. A two-day program that takes the best college basketball pl",
   "published": "",
   "category": "General"
  },
@@ -404,6 +440,246 @@
   "title": "Still explosive. @cristiano",
   "link": "https://www.youtube.com/shorts/vag8eSL_84o",
   "summary": "",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i4.ytimg.com/vi/KCeChDMx8FE/hqdefault.jpg",
+  "date": "2026-06-11",
+  "title": "Rip The Script | King Eric's Message | Nike Football",
+  "link": "https://www.youtube.com/watch?v=KCeChDMx8FE",
+  "summary": "Dear Football,\n\nA huge summer of football of awaits.\nAs the tournament begins, Eric Cantona has a message for you…\n\nRip The Script.\n\n\nShop Nike Football https://nike.sng.link/Estn5/jd0o/u1fh\nDownload Nike App https://www.nike.com/nike-app\nDownload SNKRS App https://www.nike.com/snkrs-app\nFollow Nike",
+  "published": "",
+  "category": "Activaciones"
+ },
+ {
+  "source": "YouTube · Nike",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i4.ytimg.com/vi/geP0DipvW0o/hqdefault.jpg",
+  "date": "2026-06-09",
+  "title": "Inside Montebelluna: The Making of Nike Mercurial Superfly & Vapor",
+  "link": "https://www.youtube.com/watch?v=geP0DipvW0o",
+  "summary": "Engineered for speed. Crafted by hand. Mercurial in the making.\n\nShop Nike Football https://nike.sng.link/Estn5/jd0o/u1fh\nDownload Nike App https://www.nike.com/nike-app\nFollow Nike Football on Instagram https://www.instagram.com/nikefootball/\nFollow Nike Football on TikTok https://www.tiktok.com/@n",
+  "published": "",
+  "category": "Tecnología"
+ },
+ {
+  "source": "YouTube · Nike",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i2.ytimg.com/vi/IyZ1WIua_1s/hqdefault.jpg",
+  "date": "2026-06-04",
+  "title": "Rip The Script | Nike Football",
+  "link": "https://www.youtube.com/watch?v=IyZ1WIua_1s",
+  "summary": "It was all going to plan until footballer's instincts took over…\n\nThis summer, it's time to Rip The Script.\n\n“Rip the Script” is a rallying cry for football lovers everywhere. Ditch the playbook and embrace attacking, creative, instinctive and joyful football. This is a reminder that the game is at ",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/jxTDjWNcDTI/hqdefault.jpg",
+  "date": "2026-06-01",
+  "title": "France x Jacquemus",
+  "link": "https://www.youtube.com/watch?v=jxTDjWNcDTI",
+  "summary": "“In France, football is more than a sport... It lives in the everyday moments and has always been part of my life. Working with the French national team means representing a country, a culture, and unforgettable moments. It means the world to me.” — Simon Porte Jacquemus\n\nX2: NIKE ’26 COLLAB KITS. E",
+  "published": "",
+  "category": "Colaboraciones"
+ },
+ {
+  "source": "YouTube · Nike Basketball",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/re5UOkpJWxc/hqdefault.jpg",
+  "date": "2026-05-31",
+  "title": "Nike Football x LEGO® Collection",
+  "link": "https://www.youtube.com/watch?v=re5UOkpJWxc",
+  "summary": "Classic Nike Football films reimagined brick by brick.\n\nThe Nike Football x LEGO® Collection kicks off June 4.",
+  "published": "",
+  "category": "Colaboraciones"
+ },
+ {
+  "source": "YouTube · Nike Basketball",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i4.ytimg.com/vi/SllOH_Q_oXE/hqdefault.jpg",
+  "date": "2026-05-30",
+  "title": "Air Works Class of 2026 | Nike Sportswear",
+  "link": "https://www.youtube.com/watch?v=SllOH_Q_oXE",
+  "summary": "Air Works Class of 2026 understood the assignment: create the future of Air. You’ll\nsee more soon.\n\nThe inaugural Air Works research, development and design program brought individual designers from Beijing, London, Los Angeles, Mumbai, New York, Paris, Shanghai and Tokyo to Nike’s headquarters to c",
+  "published": "",
+  "category": "Negocio"
+ },
+ {
+  "source": "YouTube · Nike",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i4.ytimg.com/vi/ojMepjpyZIw/hqdefault.jpg",
+  "date": "2026-05-30",
+  "title": "It was never going to be just one.",
+  "link": "https://www.youtube.com/watch?v=ojMepjpyZIw",
+  "summary": "When a whole city stands together, you can’t help but win, again. @psg ⭐️⭐\n️\nQuand toute une ville avance ensemble, elle finit toujours par gagner, encore. @psg ⭐️⭐",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/z3MdPxqmFTU/hqdefault.jpg",
+  "date": "2026-05-30",
+  "title": "Nobody can play like Zlatan.",
+  "link": "https://www.youtube.com/watch?v=z3MdPxqmFTU",
+  "summary": "Nobody can play like @Zlatan But today, you can try.",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i4.ytimg.com/vi/k1lGCMl8t_8/hqdefault.jpg",
+  "date": "2026-05-24",
+  "title": "Netherlands x Patta",
+  "link": "https://www.youtube.com/watch?v=k1lGCMl8t_8",
+  "summary": "Strength is found in diversity. Patta and Nike reimagine Dutch football through the spirit of the New Netherlands.\n\nX2: NIKE ’26 COLLAB KITS. EARLY ACCESS AVAILABLE AT @pattaoriginalclothing  & @OnsOranje \n\nCOMING TO SNKRS AND SELECT RETAILERS THIS SUMMER",
+  "published": "",
+  "category": "Colaboraciones"
+ },
+ {
+  "source": "YouTube · Nike",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i1.ytimg.com/vi/LpAq5J3fZPw/hqdefault.jpg",
+  "date": "2026-05-23",
+  "title": "England x Palace",
+  "link": "https://www.youtube.com/watch?v=LpAq5J3fZPw",
+  "summary": "•PALACE NIKE ENGLAND\n•FOOTY:\n•WE’VE BEEN\n•DOING IT\n•FOR TIME\n\nX2: NIKE ’26 COLLAB KITS. EARLY ACCESS AVAILABLE AT ​⁠@PALACESKATEBOARDSLONDON  & @england \n\nCOMING TO SNKRS AND SELECT RETAILERS THIS SUMMER",
+  "published": "",
+  "category": "Colaboraciones"
+ },
+ {
+  "source": "YouTube · Nike Basketball",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i2.ytimg.com/vi/q4TloqMOECo/hqdefault.jpg",
+  "date": "2026-05-06",
+  "title": "NikeSKIMS Studio Stretch | Nike",
+  "link": "https://www.youtube.com/watch?v=q4TloqMOECo",
+  "summary": "Your softness is your strength.\n\nIntroducing NikeSKIMS Studio Stretch, the must-have material innovation you have to feel to believe. A buttery soft, weightless, & breathable Dri-Fit collection designed to be your new studio essentials.\n\nFt. https://www.instagram.com/raveena_aurora/",
+  "published": "",
+  "category": "Tecnología"
+ },
+ {
+  "source": "YouTube · Nike Basketball",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i2.ytimg.com/vi/YrSKp7i-EoQ/hqdefault.jpg",
+  "date": "2026-04-30",
+  "title": "Road Junkie Diaries | Ethan Strand | Nike",
+  "link": "https://www.youtube.com/watch?v=YrSKp7i-EoQ",
+  "summary": "Ethan Strand doesn’t train halfway. The former North Carolina standout runs until there’s nothing left to negotiate. Pegasus 42 is built for that kind of effort—the road‑ready daily trainer that feels light, smooth, and easy to run fast in.\n\nhttps://www.instagram.com/ethan_strand\nhttps://www.instagr",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/VoXDduito9w/hqdefault.jpg",
+  "date": "2026-03-21",
+  "title": "La Celeste no se rinde, ni se achica.",
+  "link": "https://www.youtube.com/watch?v=VoXDduito9w",
+  "summary": "La Celeste never retreats, never surrenders.",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike Basketball",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i4.ytimg.com/vi/s_aG2H00LyQ/hqdefault.jpg",
+  "date": "2026-03-14",
+  "title": "Road Less Traveled with Grant Fisher | Nike",
+  "link": "https://www.youtube.com/watch?v=s_aG2H00LyQ",
+  "summary": "World Records. Olympic medals. Not enough. \n\nThey say Grant Fisher is an animal on the track. And they’re right. But what about the streets?\n\n“This half marathon, it’s an indicator. Do I have a future in [road running] or not?”\n\nGet a peek into the monumental shift Grant undergoes as he moves from t",
+  "published": "",
+  "category": "Atletas"
+ },
+ {
+  "source": "YouTube · Nike Women",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i1.ytimg.com/vi/8rHK18Jdysc/hqdefault.jpg",
+  "date": "2026-02-09",
+  "title": "We Run it Now | Nike",
+  "link": "https://www.youtube.com/watch?v=8rHK18Jdysc",
+  "summary": "Sweet sweet victory.",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/ZakydYptTOw/hqdefault.jpg",
+  "date": "2025-12-17",
+  "title": "Show Dem Nike Football",
+  "link": "https://www.youtube.com/watch?v=ZakydYptTOw",
+  "summary": "When football calls, Jay-Jay Okocha aka the Chief Flair Officer answers. Game’s gone? Nah, it’s all here. Show dem. \n\nJay-Jay Okocha\nIsmael Saibari\n@rasheedatt10\nObafemi Martins\n\n#NikeFootball #showdem",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike Football",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/Z3KnCOCjlOk/hqdefault.jpg",
+  "date": "2025-09-02",
+  "title": "Sam Kerr | Player Edition | Nike",
+  "link": "https://www.youtube.com/watch?v=Z3KnCOCjlOk",
+  "summary": "Sam Kerr is the World’s Most Dangerous Striker.\n\nCatch her new Player Edition Mercurial Superfly, before they catch you.\n\n#NikeFootball",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike Football",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/vdK9Wo8xAxw/hqdefault.jpg",
+  "date": "2025-07-16",
+  "title": "Scary Good: Catarina Macario | Nike Football",
+  "link": "https://www.youtube.com/watch?v=vdK9Wo8xAxw",
+  "summary": "Tired of crumbling under pressure? Enquire now at Catarina Macario's Cold-Blooded Clinic.  \n\n#NikeFootball",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike Football",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/ForOyF6yTbE/hqdefault.jpg",
+  "date": "2025-07-12",
+  "title": "Scary Good: Kerolin | Nike Football",
+  "link": "https://www.youtube.com/watch?v=ForOyF6yTbE",
+  "summary": "Kerolin turns defenders to dust.",
+  "published": "",
+  "category": "General"
+ },
+ {
+  "source": "YouTube · Nike Football",
+  "platform": "YouTube",
+  "priority": 2,
+  "image": "https://i3.ytimg.com/vi/NlW-dYw7oGY/hqdefault.jpg",
+  "date": "2025-07-11",
+  "title": "Scary Good: Salma Paralluelo | Nike Football",
+  "link": "https://www.youtube.com/watch?v=NlW-dYw7oGY",
+  "summary": "The Defender Ender Salma Paralluelo\n\n#NikeFootball",
   "published": "",
   "category": "General"
  }
