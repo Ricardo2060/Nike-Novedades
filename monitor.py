@@ -60,7 +60,18 @@ def fetch_youtube(src):
         if not m:
             raise ValueError(f"no se pudo resolver el canal @{src['handle']}")
         cid = m.group(1)
-    return fetch_rss(src, f"https://www.youtube.com/feeds/videos.xml?channel_id={cid}")
+    base = "https://www.youtube.com/feeds/videos.xml?"
+    if src.get("include_shorts"):
+        return fetch_rss(src, base + f"channel_id={cid}")
+    # UULF + id sin "UC" = lista solo de vídeos normales (sin Shorts ni directos)
+    try:
+        items = fetch_rss(src, base + f"playlist_id=UULF{cid[2:]}")
+        if items:
+            return [i for i in items if "/shorts/" not in i["link"]]
+    except Exception:
+        pass
+    # respaldo: feed completo del canal quitando los enlaces /shorts/
+    return [i for i in fetch_rss(src, base + f"channel_id={cid}") if "/shorts/" not in i["link"]]
 
 
 def fetch_page(src):
@@ -90,6 +101,36 @@ def enabled(src):
     if src.get("enabled", True) is False:
         return False
     return "PEGA_" not in str(src.get("url", ""))
+
+
+# ───────────── Antiduplicados ─────────────
+def _norm(t):
+    return re.sub(r"\s+", " ", re.sub(r"[^\w\s]", " ", t.lower())).strip()
+
+
+def _is_dup(a, b, days=7):
+    try:
+        gap = abs((dt.date.fromisoformat(a["date"]) - dt.date.fromisoformat(b["date"])).days)
+    except ValueError:
+        gap = 0
+    if gap > days:
+        return False
+    na, nb = _norm(a["title"]), _norm(b["title"])
+    if na == nb:
+        return True
+    short, long_ = sorted((na, nb), key=len)
+    return len(short) >= 12 and short in long_      # un título contenido en el otro
+
+
+def dedupe(items):
+    """Quita repeticiones (mismo vídeo/noticia con título igual o muy parecido).
+    Se queda con la versión que no es un Short, de fuente más prioritaria y título más completo."""
+    ranked = sorted(items, key=lambda i: ("/shorts/" in i["link"], i["priority"], -len(i["title"])))
+    kept = []
+    for it in ranked:
+        if not any(_is_dup(it, k) for k in kept):
+            kept.append(it)
+    return kept
 
 
 # ───────────── Estado y clasificación ─────────────
@@ -216,6 +257,7 @@ def main():
     for src in sorted(cfg["sources"], key=lambda s: s.get("priority", 9)):
         if not enabled(src):
             continue
+        src.setdefault("include_shorts", cfg.get("include_shorts", False))
         try:
             items = FETCHERS[src["type"]](src)
         except Exception as ex:  # una fuente rota no tumba las demás
@@ -234,6 +276,7 @@ def main():
     for cat, lst in groups.items():
         for i in lst:
             history.append({**i, "category": cat})
+    history = dedupe(history)
     history.sort(key=lambda i: (i["date"], -i["priority"]), reverse=True)
     history = history[:cfg.get("wall_items", 150)]
     (out / "site" / "index.html").write_text(render_wall(history, today.isoformat()), encoding="utf-8")

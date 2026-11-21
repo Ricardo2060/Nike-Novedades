@@ -6,6 +6,7 @@
 max_items_per_source: 10     # tope por fuente y por ejecución
 keep_days: 180               # cuánto tiempo recordar lo ya enviado
 wall_items: 150              # tarjetas máximas en la página
+include_shorts: false        # false = YouTube solo con vídeos normales, sin Shorts
 
 sources:
   # ── 1. Webs oficiales ──────────────────────────────────────
@@ -25,6 +26,7 @@ sources:
   - {name: "YouTube · Nike",            type: youtube, priority: 2, handle: nike}
   - {name: "YouTube · Nike Football",   type: youtube, priority: 2, handle: nikefootball}
   - {name: "YouTube · Nike Basketball", type: youtube, priority: 2, handle: nikebasketball}
+  - {name: "YouTube · Nike Skateboarding", type: youtube, priority: 2, handle: nikeskateboarding}
   - {name: "YouTube · Nike Women",      type: youtube, priority: 2, handle: nikewomen}
   - {name: "YouTube · Nike Running",    type: youtube, priority: 2, handle: nikerunning}
 
