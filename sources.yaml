@@ -4,8 +4,17 @@
 #  Una fuente con `enabled: false` o con una URL "PEGA_..." se ignora.
 # ─────────────────────────────────────────────────────────────
 max_items_per_source: 10     # tope por fuente y por ejecución
+# Personalización de la página
+branding:
+  title: "Novedades oficiales"
+  store: "2060"           # aparece en la cabecera y en la pestaña del navegador
+  accent: "#FA5400"              # color de acento (naranja Nike)
+  logo_invert: false             # pon true si tu logo es negro y quieres verlo en blanco sobre la cabecera negra
+  # El logo se sube al repositorio como logo.svg (o logo.png) y se detecta solo.
+
 keep_days: 180               # cuánto tiempo recordar lo ya enviado
-wall_items: 150              # tarjetas máximas en la página
+wall_days: 30               # el muro solo muestra lo publicado en los últimos 30 días
+wall_items: 300              # tarjetas máximas en la página
 include_shorts: false        # false = YouTube solo con vídeos normales, sin Shorts
 
 sources:
@@ -13,8 +22,26 @@ sources:
   - name: Nike News (about.nike.com)
     type: page
     priority: 1
+    platform: Newsroom
     url: https://about.nike.com/en/newsroom
-    link_pattern: "/newsroom/releases/"
+    link_pattern: "/newsroom/(releases|news)/"
+    render: true                 # la lista completa se carga con JavaScript: se abre con un navegador
+    wait_for: "/newsroom/"       # espera a que aparezcan los enlaces de noticias
+    max_age_days: 30             # solo noticias de hasta un mes
+    max_items: 60                # tope de noticias nuevas por ejecución
+
+  - name: Nike Magazine (about.nike.com)
+    type: page
+    platform: Magazine
+    priority: 1
+    url: https://about.nike.com/en/magazine
+    link_pattern: '/magazine/[\w-]+/?$'
+    render: true
+    wait_for: "/magazine/"
+    enrich: article              # abre cada artículo nuevo para leer su título, fecha e imagen reales
+    enrich_limit: 40             # máximo de artículos que abre por ejecución
+    max_age_days: 30
+    max_items: 60
 
   - name: Nike.com · Stories
     type: page
