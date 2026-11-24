@@ -6,11 +6,13 @@
 max_items_per_source: 10     # tope por fuente y por ejecución
 # Personalización de la página
 branding:
-  title: "Novedades oficiales"
-  store: "2060"           # aparece en la cabecera y en la pestaña del navegador
-  accent: "#FA5400"              # color de acento (naranja Nike)
-  logo_invert: false             # pon true si tu logo es negro y quieres verlo en blanco sobre la cabecera negra
-  # El logo se sube al repositorio como logo.svg (o logo.png) y se detecta solo.
+  title: "What’s new"            # título de la cabecera (se muestra en mayúsculas)
+  tab_title: "Novedades Nike 2060"   # texto de la pestaña del navegador
+  store: "2060"                  # etiqueta naranja de la cabecera
+  author: "by RSL"               # firma pequeña bajo la etiqueta
+  accent: "#FA5400"              # color de acento (naranja)
+  logo_invert: false             # true = logo negro que se quiere ver en blanco
+  # El logo se sube al repositorio como logo.png/logo.svg y el icono como favicon.png; se detectan solos.
 
 keep_days: 180               # cuánto tiempo recordar lo ya enviado
 wall_days: 30               # el muro solo muestra lo publicado en los últimos 30 días
@@ -27,6 +29,8 @@ sources:
     link_pattern: "/newsroom/(releases|news)/"
     render: true                 # la lista completa se carga con JavaScript: se abre con un navegador
     wait_for: "/newsroom/"       # espera a que aparezcan los enlaces de noticias
+    enrich: article              # abre cada noticia nueva para leer su descripción (mejora las categorías)
+    enrich_limit: 40
     max_age_days: 30             # solo noticias de hasta un mes
     max_items: 60                # tope de noticias nuevas por ejecución
 
@@ -67,12 +71,30 @@ sources:
   - {name: "Instagram · @niketraining",   type: rss, platform: Instagram, priority: 3, enabled: false, url: PEGA_URL_RSS_AQUI}
   - {name: "Instagram · @nikefootball",   type: rss, platform: Instagram, priority: 3, enabled: false, url: PEGA_URL_RSS_AQUI}
 
-# Categorías: gana la primera que coincida (por palabras clave en título/resumen).
+# Categorías: cada una puntúa por palabras clave en el título (pesa más) y en el resumen.
+#   strong   = palabras que casi aseguran la categoría
+#   keywords = pistas más débiles
+# Una palabra con * al final vale para todas las que empiecen así (champion* = champion, champions...).
+# Gana la categoría con más puntos; si hay empate, la primera de la lista. Sin pistas claras -> General.
 categories:
-  - {name: Negocio,         keywords: [earnings, revenue, quarter, investor, fiscal, ceo, results, shareholder, resultados, ingresos]}
-  - {name: Atletas,         keywords: [signs, signing, athlete, champion, medal, record, wins, nil roster, atleta, campeón, oro]}
-  - {name: Colaboraciones,  keywords: [collab, collaboration, " x ", partnership, partner, colaboración, alianza]}
-  - {name: Tecnología,      keywords: [technology, innovation, air zoom, flyknit, vaporfly, dri-fit, tech, engineered, tecnolog, innovaci]}
-  - {name: Activaciones,    keywords: [event, pop-up, activation, house of, tour, experience, evento, experiencia]}
-  - {name: Lanzamientos,    keywords: [launch, drop, release, available, debut, introduc, unveil, reveal, lanzamiento, disponible]}
-  - {name: Producto,        keywords: [collection, shoe, sneaker, kit, jersey, footwear, apparel, colección, zapatilla]}
+  - name: Negocio
+    strong: [earnings, revenue, fiscal, quarter*, investor*, shareholder*, dividend, ceo, "chief executive", appoint*, restructuring, layoffs, strategy, "financial results", "annual report"]
+    keywords: [priorities, growth, business, president, executive, chief, officer, corporate, operations, leadership, sales, results, outlook]
+  - name: Atletas
+    strong: [signs, signing, roster, champion*, medal*, "world record", olympic*, paralympic*, nba, wnba, nfl, "grand slam", rookie, draft*, "world cup", "ballon d'or"]
+    keywords: [athlete*, journey, record, wins, victory, career, star, legend, season, football*, soccer, basketball, tennis, golf, skateboard*, runner*, marathon, "track and field", gymnast*]
+  - name: Colaboraciones
+    strong: [x, "×", collab*, partnership*, "partners with", "teams up", "join forces", "official partner", extension]
+    keywords: [partner*, together, alliance, "in collaboration"]
+  - name: Activaciones
+    strong: ["pop-up", activation*, "house of", festival, tour, "grand opening", exhibit*, takeover, immersive, experience*]
+    keywords: [event, opens, community, camp, clinic, workshop, virtual, roblox, fortnite, "city"]
+  - name: Tecnología
+    strong: [technology, innovation*, "tuned air", "air zoom", flyknit, vaporfly, zoomx, "dri-fit", aeroswift, flyease, "sport research", cushioning, engineered, "nike tech", ai]
+    keywords: [tech, science, lab, research, design, digital, app, data, material*, performance]
+  - name: Lanzamientos
+    strong: [launch*, drop, drops, release*, available, debut*, unveil*, reveal*, introduc*, "first look", "pre-order", "official images", arrives, reintroduc*, inaugural]
+    keywords: [new, returns, coming, "now"]
+  - name: Producto
+    strong: [collection*, shoe*, sneaker*, kit, kits, jersey*, boot*, footwear, apparel, cleat*, slide*, signature, colorway*, pack]
+    keywords: [lebron, kobe, jordan, pegasus, vomero, dunk, cortez, "air force", "air max", free, zoom, pegasus, "nike apex"]

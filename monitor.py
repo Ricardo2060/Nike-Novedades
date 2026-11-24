@@ -2,6 +2,7 @@
 """Monitor de noticias oficiales de Nike → muro web (+ email opcional)."""
 import argparse, datetime as dt, html, json, os, re, shutil, smtplib, ssl, subprocess, sys
 from collections import defaultdict
+from functools import lru_cache
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
@@ -45,6 +46,35 @@ def clean_title(text, span=None):
         text = after if len(after) >= 12 else before
     text = re.sub(r"read the release\s*[›>]*", "", text, flags=re.I)
     return re.sub(r"[\s›]+$", "", re.sub(r"\s+", " ", text)).strip()
+
+
+
+def fmt_date(iso):
+    """2026-11-23 -> 23-11-2026"""
+    try:
+        return dt.date.fromisoformat(iso).strftime("%d-%m-%Y")
+    except ValueError:
+        return iso
+
+
+_ABBR = re.compile(r"(?:\bvs|\be\.g|\bi\.e|\betc|\bno|\binc|\bco|\bst|\bdr|\bmr|\bms)$", re.I)
+
+
+def cap_sentences(text):
+    """Pone mayúscula al inicio del texto y de cada frase (tras . ! ?), sin tocar abreviaturas como 'vs.'"""
+    chars = list(text)
+    for i, ch in enumerate(chars):               # primera letra del texto
+        if ch.isalpha():
+            chars[i] = ch.upper()
+            break
+        if ch.isdigit():
+            break
+    out = "".join(chars)
+
+    def fix(m):
+        return m.group(0) if _ABBR.search(out[:m.start(1)]) else m.group(1) + m.group(2) + m.group(3).upper()
+
+    return re.sub(r"([.!?])(\s+)([a-záéíóúüñ])", fix, out)
 
 
 # ───────────── Obtención de fuentes ─────────────
@@ -164,7 +194,7 @@ def article_info(link):
     date = pub[:10] if re.match(r"\d{4}-\d{2}-\d{2}", pub) else ""
     if not date:   # la fecha de publicación aparece justo debajo del título
         date = find_date(soup.get_text(" ", strip=True)[:4000])[0] or ""
-    return title, date, meta("og:image")
+    return title, date, meta("og:image"), (meta("og:description") or meta("description"))[:300]
 
 
 def parse_page_html(src, text):
@@ -172,10 +202,10 @@ def parse_page_html(src, text):
     pat = re.compile(src["link_pattern"])
     clean = lambda a: urljoin(src["url"], a["href"]).split("#")[0].split("?")[0]
     n_links = lambda node: len({clean(x) for x in node.find_all("a", href=True) if pat.search(clean(x))})
-    seen, out = set(), []
+    index, out = {}, []                 # un mismo artículo suele tener varios enlaces (imagen, título, "ver")
     for a in soup.find_all("a", href=True):
         link = clean(a)
-        if not pat.search(link) or link.rstrip("/") == src["url"].rstrip("/") or link in seen:
+        if not pat.search(link) or link.rstrip("/") == src["url"].rstrip("/"):
             continue
         raw = a.get("aria-label") or a.get_text(" ", strip=True)
         date, span = find_date(raw)
@@ -188,15 +218,29 @@ def parse_page_html(src, text):
                 date = find_date(node.get_text(" ", strip=True))[0]
                 if date:
                     break
-        title = clean_title(raw, span)
+        title, slug_title = clean_title(raw, span), False
         if len(title) < 12:     # descarta "Read the Release ›", iconos, etc.
             if not src.get("enrich"):
                 continue
-            title = urlparse(link).path.rstrip("/").split("/")[-1].replace("-", " ").title()
-        seen.add(link)
+            title, slug_title = urlparse(link).path.rstrip("/").split("/")[-1].replace("-", " ").title(), True
         img = a.find("img")
         src_img = (img.get("src") or img.get("data-src") or "") if img else ""
-        out.append(item(src, title, link, image=urljoin(src["url"], src_img) if src_img else "", date=date or ""))
+        image = urljoin(src["url"], src_img) if src_img else ""
+        if link in index:       # mismo artículo: completar lo que faltaba (título real, imagen, fecha)
+            cur = out[index[link]]
+            if cur["_slug"] and not slug_title:
+                cur["title"], cur["_slug"] = title, False
+            if not cur["image"] and image:
+                cur["image"] = image
+            if not cur["date_real"] and date:
+                cur["date"], cur["date_real"] = date, True
+            continue
+        it = item(src, title, link, image=image, date=date or "")
+        it["_slug"] = slug_title
+        index[link] = len(out)
+        out.append(it)
+    for it in out:
+        it.pop("_slug", None)
     return filter_age(src, out)
 
 
@@ -226,12 +270,15 @@ def fetch_page(src):
                 continue
             opened += 1
             try:
-                title, date, img = article_info(i["link"])
+                title, date, img, desc = article_info(i["link"])
             except Exception:
+                if i["date_real"]:      # ya traía fecha del listado: se conserva aunque no se pueda abrir
+                    kept.append(i)
                 continue
-            if not date:        # sin fecha de publicación no es un artículo (o no se puede ordenar): se descarta
+            if not date and not i["date_real"]:   # sin fecha de publicación no es un artículo: se descarta
                 continue
-            i.update(date=date, date_real=True, title=title or i["title"], image=img or i["image"])
+            i.update(date=date or i["date"], date_real=True, title=title or i["title"],
+                     image=img or i["image"], summary=desc or i["summary"])
             kept.append(i)
         out = filter_age(src, kept)
         if not out:
@@ -282,12 +329,30 @@ def load_state(path):
     return json.loads(path.read_text()) if path.exists() else {}
 
 
+@lru_cache(maxsize=None)
+def _kw_regex(k):
+    """'palabra' = palabra exacta; 'palabra*' = cualquier palabra que empiece así (champion*, olympic*)."""
+    k = k.strip().lower()
+    stem = k.endswith("*")
+    return re.compile(r"(?<!\w)" + re.escape(k.rstrip("*")) + (r"\w*" if stem else r"(?!\w)"))
+
+
 def categorize(it, cats):
-    text = f" {it['title']} {it['summary']} ".lower()
+    """Puntúa cada categoría: palabra fuerte = 4 en el título / 2 en el resumen; normal = 2 / 1.
+    Gana la de más puntos (a igualdad, la primera de la lista); con menos de 2 puntos -> General."""
+    title, summ = it["title"].lower(), (it.get("summary") or "").lower()
+    best, best_score = "General", 0
     for c in cats:
-        if any(k.lower() in text for k in c["keywords"]):
-            return c["name"]
-    return "General"
+        score = 0
+        for k in c.get("strong", []):
+            r = _kw_regex(k)
+            score += (4 if r.search(title) else 0) + (2 if r.search(summ) else 0)
+        for k in c.get("keywords", []):
+            r = _kw_regex(k)
+            score += (2 if r.search(title) else 0) + (1 if r.search(summ) else 0)
+        if score > best_score:
+            best, best_score = c["name"], score
+    return best if best_score >= 2 else "General"
 
 
 # ───────────── Salida ─────────────
@@ -312,30 +377,37 @@ def render(groups, errors, order, today):
 
 # ───────────── Muro web ─────────────
 WALL_CSS = """
-:root{--bg:#fff;--fg:#111;--card:#f5f5f5;--mut:#6b6b6b;--acc:#111;--hot:#FA5400;--line:#d9d9d9}
+:root{--bg:#fff;--fg:#111;--card:#f5f5f5;--mut:#6b6b6b;--acc:#111;--hot:#FA5400;--line:#d9d9d9;
+ --f:Futura,"Futura PT","Futura Std",Jost,"Century Gothic","Avenir Next",Arial,sans-serif;
+ --sig:Georgia,"Times New Roman",serif}
 @media (prefers-color-scheme:dark){:root{--bg:#000;--fg:#fff;--card:#151515;--mut:#9a9a9a;--acc:#fff;--line:#2a2a2a}}
-*{box-sizing:border-box}body{margin:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
-h1,h2,.wm,.store,.bar button,.cat{font-family:"Futura Condensed ExtraBold","Futura Condensed Medium","Helvetica Neue Condensed Bold","Arial Narrow Bold","Roboto Condensed",Impact,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.04em}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--f);font-weight:400;background:var(--bg);color:var(--fg)}
+h1,h2,.store,.bar button,.cat{font-family:var(--f);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
 .top{background:#000;color:#fff;border-bottom:4px solid var(--hot)}
 .top .wrap{max-width:1200px;margin:auto;padding:18px 20px 10px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.top img.logo{height:34px;width:auto;display:block}.top img.logo.inv{filter:invert(1) brightness(2)}.wm{font-size:2rem;font-weight:900;font-style:italic;line-height:1}
-.top h1{margin:0;font-size:1.7rem;font-weight:900;line-height:1}
-.store{background:var(--hot);color:#000;font-weight:900;padding:5px 10px;font-size:1rem;line-height:1;margin-left:auto}
-.sub{max-width:1200px;margin:auto;padding:0 20px 14px;color:#bdbdbd;font-size:.85rem}
+.top img.logo{height:34px;width:auto;display:block}.top img.logo.inv{filter:invert(1) brightness(2)}
+.wm{font-family:var(--f);font-size:2rem;font-weight:700;text-transform:uppercase;line-height:1}
+.top h1{margin:0;font-size:1.7rem;line-height:1}
+.right{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.store{background:var(--hot);color:#000;padding:5px 10px;font-size:1rem;line-height:1}
+.author{font-family:var(--sig);font-style:italic;font-weight:400;font-size:.72rem;color:#bdbdbd;letter-spacing:.02em}
+.sub{max-width:1200px;margin:auto;padding:0 20px 14px;color:#bdbdbd;font-size:.85rem;font-weight:400}
 .bar{display:flex;flex-wrap:wrap;gap:8px;padding:10px 20px 0;max-width:1200px;margin:auto}
-.bar button{border:2px solid var(--fg);background:none;color:var(--fg);padding:6px 14px;border-radius:0;cursor:pointer;font-size:.9rem}
+.bar button{border:2px solid var(--fg);background:none;color:var(--fg);padding:6px 14px;border-radius:0;cursor:pointer;font-size:.85rem}
 .bar button:hover{border-color:var(--hot);color:var(--hot)}.bar button.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
-section{max-width:1200px;margin:16px auto 0;padding:0 20px}section h2{font-size:1.5rem;margin:16px 0 4px;font-weight:900}
-section h2 small{font-family:"Helvetica Neue",Arial,sans-serif;text-transform:none;letter-spacing:0;color:var(--mut);font-weight:400;font-size:.85rem;margin-left:8px}
+section{max-width:1200px;margin:16px auto 0;padding:0 20px}section h2{font-size:1.4rem;margin:16px 0 4px}
+section h2 small{font-family:var(--f);text-transform:none;letter-spacing:0;color:var(--mut);font-weight:400;font-size:.85rem;margin-left:8px}
 #recent{border:3px solid var(--hot);padding:4px 18px 8px;margin:18px 20px 0;max-width:1160px}#recent h2{color:var(--hot)}
 @media (min-width:1240px){#recent{margin:18px auto 0}}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;padding:12px 0 24px}
 .card{background:var(--card);border-radius:0;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;border-bottom:3px solid transparent;transition:border-color .15s,transform .15s}
 .card:hover{border-bottom-color:var(--hot);transform:translateY(-2px)}
-.card img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#888}.card .t{padding:12px 14px 4px;font-weight:700;line-height:1.3}
-.card .m{padding:0 14px 12px;color:var(--mut);font-size:.8rem;margin-top:auto}.card.noimg .t{padding-top:16px;font-size:1.05rem}
-.cat{color:var(--hot);font-weight:900;font-size:.85rem}.card .dt.new{color:var(--fg);font-weight:700}
-.empty{color:var(--mut);padding:8px 0 16px}.hide{display:none!important}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#888}
+.card .t{padding:12px 14px 6px;font-weight:400;font-size:1.05rem;line-height:1.3}
+.card .m{padding:0 14px 12px;color:var(--mut);font-size:.8rem;font-weight:400;margin-top:auto}.card.noimg .t{padding-top:16px}
+.cat{color:var(--hot);font-size:.78rem}.card .dt{white-space:nowrap}.card .dt.new{color:var(--fg);font-weight:700}
+.grid:empty{display:none}.empty{color:var(--mut);padding:8px 0 16px;font-weight:400}.hide{display:none!important}
 """
 WALL_JS = """
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -358,6 +430,11 @@ apply();
 """
 
 
+FONT_LINK = ("<link rel='preconnect' href='https://fonts.googleapis.com'>"
+             "<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>"
+             "<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap'>")
+
+
 def render_wall(items, today, days=30, brand=None, logo=None, icon=None):
     e = html.escape
     brand = brand or {}
@@ -377,25 +454,30 @@ def render_wall(items, today, days=30, brand=None, logo=None, icon=None):
         cards.append(
             f'<a class="card{"" if img else " noimg"}" href="{e(i["link"])}" target="_blank" rel="noopener" '
             f'data-p="{e(i["platform"])}" data-c="{e(i["category"])}" data-d="{e(i["date"])}">{img}'
-            f'<div class="t">{e(i["title"])}</div>'
+            f'<div class="t">{e(cap_sentences(i["title"]))}</div>'
             f'<div class="m"><span class="cat">{e(i["category"])}</span> · {e(i["source"])} · '
-            f'<span class="dt">{e(i["date"])}</span></div></a>')
+            f'<span class="dt">{e(fmt_date(i["date"]))}</span></div></a>')
     inv = " inv" if brand.get("logo_invert") else ""
     mark = (f'<img class="logo{inv}" src="{e(logo)}" alt="Nike">' if logo else '<span class="wm">Nike</span>')
-    store_tag = f'<span class="store">{e(store)}</span>' if store else ""
+    author = brand.get("author", "")
+    right = ""
+    if store or author:
+        right = ("<div class='right'>" + (f'<span class="store">{e(store)}</span>' if store else "") +
+                 (f'<span class="author">{e(author)}</span>' if author else "") + "</div>")
+    tab = brand.get("tab_title") or (f"{title} · {store}" if store else title)
     accent_css = f"<style>:root{{--hot:{accent}}}</style>" if re.fullmatch(r"#[0-9a-fA-F]{3,8}", accent) else ""
     icon = icon or logo
     icon = f'<link rel="icon" href="{e(icon)}">' if icon else ""
     return ("<!doctype html><html lang='es'><head><meta charset='utf-8'>"
             "<meta name='viewport' content='width=device-width,initial-scale=1'>"
-            f"<title>{e(title)}{' · ' + e(store) if store else ''}</title>{icon}<style>{WALL_CSS}</style>{accent_css}</head><body>"
-            f"<header class='top'><div class='wrap'>{mark}<h1>{e(title)}</h1>{store_tag}</div>"
-            f"<div class='sub'>Más recientes arriba · últimos {days} días · actualizado el {today}</div></header>"
+            f"<title>{e(tab)}</title>{icon}{FONT_LINK}<style>{WALL_CSS}</style>{accent_css}</head><body>"
+            f"<header class='top'><div class='wrap'>{mark}<h1>{e(title)}</h1>{right}</div>"
+            f"<div class='sub'>Last {days} days · Updated {e(fmt_date(today))}</div></header>"
             f"<div class='bar'>{btns('p', plats)}</div><div class='bar'>{btns('c', cats)}</div>"
-            "<section id='recent'><h2>● Lo más reciente <small>hoy y ayer</small></h2>"
+            "<section id='recent'><h2>● Lo más reciente <small>Hoy y ayer</small></h2>"
             "<div class='grid' id='g-recent'></div>"
             "<p class='empty hide' id='none-recent'>Sin novedades de hoy ni de ayer.</p></section>"
-            f"<section id='older'><h2>Anteriores <small>de más reciente a más antigua · hasta {days} días</small></h2>"
+            f"<section id='older'><h2>Anteriores <small>De más reciente a más antigua · hasta {days} días</small></h2>"
             f"<div class='grid' id='g-older'>{''.join(cards)}</div></section>"
             f"<script>{WALL_JS}</script></body></html>")
 
@@ -477,6 +559,8 @@ def main():
     for cat, lst in groups.items():
         for i in lst:
             history.append({**i, "category": cat})
+    for i in history:       # reclasifica también lo ya guardado, así las mejoras de categorías se aplican a todo
+        i["category"] = categorize(i, cfg["categories"])
     history = dedupe([i for i in history if i["date"] >= age_limit])
     history.sort(key=lambda i: (i["date"], -i["priority"]), reverse=True)
     history = history[:cfg.get("wall_items", 300)]
